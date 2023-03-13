@@ -6,6 +6,7 @@ function App() {
   let [좋아요, 좋아요변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
   let [title, setTitle] = useState(0);
+  let [입력값, 입력값변경] = useState("");
 
   // let arr = [1, 2, 3].map(function (a) {
   //   return "123232";
@@ -81,7 +82,8 @@ function App() {
             >
               {글제목[i]}
               <span
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   let copy = [...좋아요];
                   copy[i] = copy[i] + 1;
                   좋아요변경(copy);
@@ -95,6 +97,11 @@ function App() {
           </div>
         );
       })}
+      <input
+        onChange={(e) => {
+          입력값변경(e.target.value);
+        }}
+      ></input>
       {modal == true ? (
         <Modal title={title} 글제목변경={글제목변경} 글제목={글제목} />
       ) : null}
