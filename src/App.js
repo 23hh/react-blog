@@ -2,10 +2,10 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  let post = "メニュー";
   let [글제목, 글제목변경] = useState(["남자코트 추천", "ㄱ맛집", "코딩"]);
   let [좋아요, 좋아요변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
+  let [title, setTitle] = useState(0);
 
   // let arr = [1, 2, 3].map(function (a) {
   //   return "123232";
@@ -73,7 +73,12 @@ function App() {
       {글제목.map(function (a, i) {
         return (
           <div className="list" key={i}>
-            <h4>
+            <h4
+              onClick={() => {
+                setModal(!modal);
+                setTitle(i);
+              }}
+            >
               {글제목[i]}
               <span
                 onClick={() => {
@@ -90,20 +95,29 @@ function App() {
           </div>
         );
       })}
-      {modal == true ? <Modal></Modal> : null}
+      {modal == true ? (
+        <Modal title={title} 글제목변경={글제목변경} 글제목={글제목} />
+      ) : null}
     </div>
   );
 }
 
-function Modal() {
+function Modal(props) {
   return (
-    <>
-      <div className="modal">
-        <h4>제목</h4>
-        <p>날짜</p>
-        <p>상세내용</p>
-      </div>
-    </>
+    <div className="modal">
+      <h4>{props.글제목[props.title]}</h4>
+      <p>날짜</p>
+      <p>상세내용</p>
+      <button
+        onClick={() => {
+          let copy = [...props.글제목];
+          copy[0] = "여자코트 추천";
+          props.글제목변경(copy);
+        }}
+      >
+        글수정
+      </button>
+    </div>
   );
 }
 
