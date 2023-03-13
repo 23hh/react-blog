@@ -94,6 +94,15 @@ function App() {
               {좋아요[i]}
             </h4>
             <p>２月17日</p>
+            <button
+              onClick={() => {
+                let copy = [...글제목];
+                copy.splice(i, 1);
+                글제목변경(copy);
+              }}
+            >
+              삭제
+            </button>
           </div>
         );
       })}
@@ -102,6 +111,16 @@ function App() {
           입력값변경(e.target.value);
         }}
       ></input>
+      <button
+        onClick={() => {
+          let copy = [...글제목];
+          copy.unshift(입력값);
+          글제목변경(copy);
+        }}
+      >
+        글발행
+      </button>
+
       {modal == true ? (
         <Modal title={title} 글제목변경={글제목변경} 글제목={글제목} />
       ) : null}
